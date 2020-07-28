@@ -71,10 +71,15 @@ class Team extends React.Component {
 function App (props) {
   return (
     <div className="App">
-     <Team name="Russiaville Raccoons" logo="./assets/racon.jpg"/>
+    <div className="stats">
+     <Team name="Russiaville Raccoons" logo="./assets/raccon.jpg"/>
+
+     <div className="versus">
+      <h1>VS</h1>
+     </div>
+    
+     <Team name="Sherdian Squirrels" logo="./assets/squirrel.jpg"/>
     </div>
-    <div>
-     <Team name="Sherdian Squirrels" logo="./assets/Squirrels.jpg"/>
     </div>
   )
 }
