@@ -28,13 +28,22 @@ class Team extends React.Component {
             shots: 0,
             score: 0,
         }
-    }
 
+        this.shotSound = new Audio("./assets/Bounces.mp3")
+        this.scoreSound = new Audio("./assets/Back+Board.mp3")
+        
+    }
     shotHandler = () => {
         let score = this.state.score
+        this.shotSound.play()
 
         if (Math.random() > 0.5) {
             score += 1
+
+            setTimeout(() => {
+                this.scoreSound.play()
+            }, 100)
+            
         }
 
         this.setState((state, props) => ({
@@ -42,10 +51,16 @@ class Team extends React.Component {
             score
         }))
     }
-
-
-
     render(){
+        let shotPercentageDiv
+        if (this.state.shots){
+        const shotPercentage = Math.round((this.state.score / this.state.shots) * 100)
+            shotPercentageDiv = (
+                <div>
+                <strong>shooting %: {shotPercentage} </strong>
+            </div>
+            )
+        }
         return(
             <div className="Team">
                 <h2>{this.props.name}</h2>
@@ -61,31 +76,73 @@ class Team extends React.Component {
              <strong>score:</strong> {this.state.score}
             </div>
 
+            {shotPercentageDiv}
+
             <button onClick={this.shotHandler}>shoot!</button>
         </div>
         )
     }
 }
+function Game(props) {
+    return (
+        <div className="game">
+            <h1>Welcome to {props.venue}</h1>
+            <div className="stats">
+                <Team
+                name={props.visitingTeam.name}
+                logo={props.visitingTeam.logoSrc}
+                />
 
+
+                <div className="versus">
+                <h1>VS</h1>
+                </div>
+
+
+                <Team
+                name={props.homeTeam.name}
+                logo={props.homeTeam.logoSrc}
+                />
+            </div>
+        </div>
+    )
+}
 // An App component under which all other components will be added
 function App (props) {
+    const raccoons = {
+        name: "Russiaville Raccoons",
+        logoSrc: "./assets/raccon.jpg",
+    }
+
+    const Squirrels = {
+        name: "Sherdian Squirrels",
+        logoSrc: "./assets/squirrel.jpg",
+    }
+
+    const bunnies = {
+        name: "Burlington Bunnies",
+        logoSrc: "./assets/bunny.jpg",
+    }
+
+    const hounds = {
+        name: "Hammond Hounds",
+        logoSrc: "./assets/houds.jpg",
+    }
   return (
     <div className="App">
-    <div className="stats">
-     <Team name="Russiaville Raccoons" logo="./assets/raccon.jpg"/>
-
-     <div className="versus">
-      <h1>VS</h1>
-     </div>
-    
-     <Team name="Sherdian Squirrels" logo="./assets/squirrel.jpg"/>
-    </div>
+        <Game
+        venue="Union 525 Gem" 
+        homeTeam={Squirrels}
+        visitingTeam={raccoons}
+        />
+        <Game
+        venue="Sheridan Arena"
+        homeTeam={bunnies} 
+        visitingTeam={hounds}
+        />
     </div>
   )
 }
-
-
-
 // Render the App
 ReactDOM.render(
   <App />,
