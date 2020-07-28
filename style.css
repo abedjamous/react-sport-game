@@ -24,6 +24,7 @@ body {
   padding: 0;
   margin: 0;
   font-family: 'Oswald', sans-serif;
+  background-color: whitesmoke;
 }
 
 .ScoreBoard {
@@ -99,4 +100,9 @@ button {
   text-transform: uppercase;
   font-size: 1.2em;
   box-shadow: 2px 2px 0 black;
+}
+
+.heading {
+    text-align: center;
+    
 }
